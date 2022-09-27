@@ -1,0 +1,16 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "localhost",
+      "database": "db2",
+      "user": "melswef",
+      "password": "password"
+    },
+    "test": {
+      "driver": "pg",
+      "host": "localhost",
+      "database": "db2_test",
+      "user": "melswef",
+      "password": "password"
+    }
+}
