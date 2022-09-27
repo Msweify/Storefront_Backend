@@ -6,8 +6,6 @@
   "scripts": {
     "build": "npx tsc",
     "test": "db-migrate.cmd --env test up && cross-env ENV=_test jasmine && db-migrate.cmd -c 5 --env test down",
-    "test2": "cross-env ENV= jasmine",
-    "watch": "tsc-watch --esModuleInterop src/index.ts --outdir dist --onSuccess 'node ./src/index.ts' ",
     "prettier": "prettier --config .prettierrc ./src/**/*.ts --write",
     "eslint": "eslint ./src/**/*.ts",
     "dev": "db-migrate.cmd up; nodemon src/index.ts",

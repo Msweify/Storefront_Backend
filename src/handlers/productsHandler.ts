@@ -6,7 +6,6 @@ const Route: express.Router = express.Router();
 
 env.config();
 
-
 const prod = new productsModel();
 
 Route.get('/products', async (req: express.Request, res: express.Response) => {
@@ -42,7 +41,7 @@ Route.post('/products', async (req: express.Request, res: express.Response) => {
     };
 
     try {
-        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+      jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
     } catch (e) {
       res.status(401);
       res.json(`Invalid token {err}`);
@@ -63,7 +62,7 @@ Route.put(
       const reqBody = req.body;
       const id: number = parseInt(req.params.id.substring(1));
       try {
-          jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
       } catch (e) {
         res.status(401);
         res.json(`Invalid token {err}`);
@@ -88,7 +87,7 @@ Route.delete(
     try {
       const id: number = parseInt(req.params.id.substring(1));
       try {
-          jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
       } catch (e) {
         res.status(401);
         res.json(`Invalid token {err}`);

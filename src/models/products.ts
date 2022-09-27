@@ -68,10 +68,7 @@ export class productsModel {
     try {
       const conn = await client.connect();
       const sql = `UPDATE products SET ${field} = $1 WHERE id = $2  RETURNING *`;
-      const res: QueryArrayResult = await conn.query(sql, [
-        newValue,
-        id
-      ]);
+      const res: QueryArrayResult = await conn.query(sql, [newValue, id]);
       conn.release();
       return res.rows[0] as unknown as products;
     } catch (e) {

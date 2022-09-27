@@ -33,8 +33,8 @@ Route.get(
       const lastName = req.body.lastName;
       const password = req.body.password;
       const result = await user.authenticateUser(firstName, lastName, password);
-      console.log(result)
-      console.log("HIIIIIIIIIIIIII")
+      console.log(result);
+      console.log('HIIIIIIIIIIIIII');
       if (result !== null) {
         const token = jwt.sign(
           { User: result },
@@ -54,7 +54,7 @@ Route.get(
 Route.get('/user', async (req: express.Request, res: express.Response) => {
   try {
     try {
-        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+      jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
     } catch (e) {
       res.status(401);
       res.json(`Invalid token {err}`);
@@ -72,7 +72,7 @@ Route.get('/user/:id', async (req: express.Request, res: express.Response) => {
   try {
     const id: number = parseInt(req.params.id.substring(1));
     try {
-        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+      jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
     } catch (e) {
       res.status(401);
       res.json(`Invalid token {err}`);

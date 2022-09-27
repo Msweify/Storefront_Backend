@@ -12,7 +12,7 @@ Route.get(
   '/ordersActiveUser/:id',
   async (req: express.Request, res: express.Response) => {
     try {
-        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+      jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
     } catch (e) {
       res.status(401);
       res.json(`Invalid token {err}`);
@@ -33,7 +33,7 @@ Route.get(
   '/ordersCompletedUser/:id',
   async (req: express.Request, res: express.Response) => {
     try {
-        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+      jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
     } catch (e) {
       res.status(401);
       res.json(`Invalid token {err}`);
@@ -57,7 +57,7 @@ Route.post('/orders', async (req: express.Request, res: express.Response) => {
       user_id: req.body.user_id
     };
     try {
-        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+      jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
     } catch (e) {
       res.status(401);
       res.json(`Invalid token {err}`);
@@ -76,7 +76,7 @@ Route.put(
   async (req: express.Request, res: express.Response) => {
     try {
       try {
-          jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
       } catch (e) {
         res.status(401);
         res.json(`Invalid token {err}`);
@@ -102,7 +102,7 @@ Route.delete(
   async (req: express.Request, res: express.Response) => {
     try {
       try {
-          jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
       } catch (e) {
         res.status(401);
         res.json(`Invalid token {err}`);
@@ -123,7 +123,7 @@ Route.post(
   async (req: express.Request, res: express.Response) => {
     try {
       try {
-          jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret)
+        jwt.verify(req.body.token, process.env.JWT_TOCKEN_SECRET as Secret);
       } catch (e) {
         res.status(401);
         res.json(`Invalid token {err}`);
