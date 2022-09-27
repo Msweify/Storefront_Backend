@@ -6,40 +6,48 @@ These are the notes from a meeting with the frontend developer that describe wha
 ## API Endpoints
 #### Products
 - Index 
-  INDEX route: '/products' [GET]
+-   INDEX route: '/products' [GET]
+-   
 - Show
-  Show route: '/products/:id' [GET]
+-   Show route: '/products/:id' [GET]
+-   
 - Create [token required]
-  CREATE route: '/products' [POST] [token required]
+-   CREATE route: '/products' [POST] [token required]
+-   
 - [OPTIONAL] Top 5 most popular products 
-  PopularProducts route: '/productsPopular' [GET] 
+-   PopularProducts route: '/productsPopular' [GET] 
+-   
 - [OPTIONAL] Products by category (args: product category)
-  productsCategory route: '/productsCategory' [GET] [args: product category]
+-   productsCategory route: '/productsCategory' [GET] [args: product category]
 
 #### Users
 - Index [token required]
-  INDEX route: '/users' [GET] [token required]
+-   INDEX route: '/users' [GET] [token required]
+-   
 - Show [token required]
-  SHOW route: '/users/:id' [GET] [token required]
+-   SHOW route: '/users/:id' [GET] [token required]
+-   
 - Create N[token required]
-  CREATE route: '/products' [POST] [args: firstName, lastName, password]
+-   CREATE route: '/products' [POST] [args: firstName, lastName, password]
+-   
 - getToken N[token required]
-  getToken route: '/user/getToken' [GET] [args: firstName, lastName, password]
+- getToken route: '/user/getToken' [GET] [args: firstName, lastName, password]
 
 #### Orders
 - Current Order by user (args: user id)[token required]
-  Current Order by user Route: '/ordersActiveUser/:id' [GET][token required]
+-   Current Order by user Route: '/ordersActiveUser/:id' [GET][token required]
+-   
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
-  Completed Orders by user Route: '/ordersCompletedUser/:id' [GET][token required]
+-   Completed Orders by user Route: '/ordersCompletedUser/:id' [GET][token required]
 
 
 ## Data Tables
-Products Table: (id serial primary key, name VARCHAR(150), price integer, category VARCHAR(50))
-Users Table: (id serial primary key, firstName  VARCHAR(75), lastName  VARCHAR(75), password VARCHAR(200))
-Orders Table: (id serial primary key, status  VARCHAR(50), user_id integer REFERENCES users(id))
-orders_products Table: (id SERIAL PRIMARY KEY, quantity integer NOT NULL, order_id integer REFERENCES orders(id), product_id integer REFERENCES products(id))
+-  Products Table: (id serial primary key, name VARCHAR(150), price integer, category VARCHAR(50))
+-  Users Table: (id serial primary key, firstName  VARCHAR(75), lastName  VARCHAR(75), password VARCHAR(200))
+-  Orders Table: (id serial primary key, status  VARCHAR(50), user_id integer REFERENCES users(id))
+-  orders_products Table: (id SERIAL PRIMARY KEY, quantity integer NOT NULL, order_id integer REFERENCES orders(id), product_id integer REFERENCES products(id))
 
-Note: The relation between products and orders is many to many while the relation between users and orders is one to many.
+-  Note: The relation between products and orders is many to many while the relation between users and orders is one to many.
 
 ## Data Shapes
 #### Product
