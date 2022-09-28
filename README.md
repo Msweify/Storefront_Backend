@@ -30,12 +30,12 @@ Backend Sever:
 
 
 Environomental vairables used:
-TEST_VAR=testing123
-PSG_DB=db2
-PSG_DB_TEST=db2_test
-PSG_USER=melswef
-PSG_PSS=password
-ENV=
-PSSWD_PEPER=TheseArePssInitials
-SALT_ROUNDS=10
-JWT_TOCKEN_SECRET=TOCKEN_SECRET
+- TEST_VAR=testing123
+- PSG_DB=db2
+- PSG_DB_TEST=db2_test
+- PSG_USER=melswef
+- PSG_PSS=password
+- ENV=
+- PSSWD_PEPER=TheseArePssInitials
+- SALT_ROUNDS=10
+- JWT_TOCKEN_SECRET=TOCKEN_SECRET
