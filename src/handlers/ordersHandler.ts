@@ -8,17 +8,20 @@ env.config();
 
 const ord = new ordersModel();
 
-Route.get(
-  '/ordersActiveUser/:id',
-  async (req: express.Request, res: express.Response) => {
-    try {
-      //console.log(`Authorization: ${req.headers.authorization}  ----  ${req.get("Authorization")}   ----- ${req.headers["authorization"]}`)
-      jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
+const verifyToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  try {
+    jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
     } catch (e) {
       res.status(401);
-      res.json(`Invalid token ${e}`);
+      res.json(`Invalid token {err}`);
       return;
     }
+    next();
+}
+
+Route.get(
+  '/ordersActiveUser/:id', verifyToken, 
+  async (req: express.Request, res: express.Response) => {
     try {
       const id: number = parseInt(req.params.id.substring(1));
       const orders: orders[] = await ord.currentOrderByUser(id);
@@ -31,15 +34,8 @@ Route.get(
 );
 
 Route.get(
-  '/ordersCompletedUser/:id',
+  '/ordersCompletedUser/:id', verifyToken,
   async (req: express.Request, res: express.Response) => {
-    try {
-      jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
-    } catch (e) {
-      res.status(401);
-      res.json(`Invalid token {err}`);
-      return;
-    }
     try {
       const id: number = parseInt(req.params.id.substring(1));
       const orders: orders[] = await ord.CompletedOrdersbyuser(id);
@@ -51,19 +47,12 @@ Route.get(
   }
 );
 
-Route.post('/orders', async (req: express.Request, res: express.Response) => {
+Route.post('/orders', verifyToken, async (req: express.Request, res: express.Response) => {
   try {
     const ordsTocreate: orders = {
       status: req.body.status,
       user_id: req.body.user_id
     };
-    try {
-      jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
-    } catch (e) {
-      res.status(401);
-      res.json(`Invalid token {err}`);
-      return;
-    }
     const ordsCreated: orders = await ord.create(ordsTocreate);
     return res.json(ordsCreated);
   } catch (err) {
@@ -73,16 +62,9 @@ Route.post('/orders', async (req: express.Request, res: express.Response) => {
 });
 
 Route.put(
-  '/orders/:id',
+  '/orders/:id', verifyToken, 
   async (req: express.Request, res: express.Response) => {
     try {
-      try {
-        jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
-      } catch (e) {
-        res.status(401);
-        res.json(`Invalid token {err}`);
-        return;
-      }
       const reqBody = req.body;
       const id: number = parseInt(req.params.id.substring(1));
       const orders: orders = await ord.update(
@@ -99,16 +81,9 @@ Route.put(
 );
 
 Route.delete(
-  '/orders/:id',
+  '/orders/:id', verifyToken,
   async (req: express.Request, res: express.Response) => {
     try {
-      try {
-        jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
-      } catch (e) {
-        res.status(401);
-        res.json(`Invalid token {err}`);
-        return;
-      }
       const id: number = parseInt(req.params.id.substring(1));
       const orders: orders = await ord.delete(id);
       return res.json(orders);
@@ -120,16 +95,9 @@ Route.delete(
 );
 
 Route.post(
-  '/orders/:id/prodcuts',
+  '/orders/:id/prodcuts', verifyToken,
   async (req: express.Request, res: express.Response) => {
     try {
-      try {
-        jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
-      } catch (e) {
-        res.status(401);
-        res.json(`Invalid token {err}`);
-        return;
-      }
       const ordersId: number = parseInt(req.params.id.substring(1));
       const productsId: number = parseInt(req.body.product_id);
       const quantity: number = parseInt(req.body.quantity);

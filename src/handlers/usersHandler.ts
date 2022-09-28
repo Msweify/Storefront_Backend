@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
 import dotenv from 'dotenv';
 import { usersModel } from '../models/users';
 import jwt, { Secret } from 'jsonwebtoken';
@@ -7,6 +7,17 @@ const Route: express.Router = express.Router();
 dotenv.config();
 
 const user = new usersModel();
+
+const verifyToken = (req: express.Request, res: express.Response, next: NextFunction) => {
+  try {
+    jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
+    } catch (e) {
+      res.status(401);
+      res.json(`Invalid token {err}`);
+      return;
+    }
+    next();
+}
 
 Route.post('/user', async (req: express.Request, res: express.Response) => {
   try {
@@ -25,7 +36,7 @@ Route.post('/user', async (req: express.Request, res: express.Response) => {
   }
 });
 
-Route.get(
+Route.post(
   '/user/getToken',
   async (req: express.Request, res: express.Response) => {
     try {
@@ -66,16 +77,9 @@ Route.get('/user', async (req: express.Request, res: express.Response) => {
   }
 });
 
-Route.get('/user/:id', async (req: express.Request, res: express.Response) => {
+Route.get('/user/:id',verifyToken, async (req: express.Request, res: express.Response) => {
   try {
     const id: number = parseInt(req.params.id.substring(1));
-    try {
-      jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
-    } catch (e) {
-      res.status(401);
-      res.json(`Invalid token {err}`);
-      return;
-    }
     const result = await user.show(id);
     return res.json(result);
   } catch (e) {

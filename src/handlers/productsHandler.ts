@@ -8,6 +8,17 @@ env.config();
 
 const prod = new productsModel();
 
+const verifyToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  try {
+    jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
+    } catch (e) {
+      res.status(401);
+      res.json(`Invalid token {err}`);
+      return;
+    }
+    next();
+}
+
 Route.get('/products', async (req: express.Request, res: express.Response) => {
   try {
     const prods: products[] = await prod.index();
@@ -32,21 +43,13 @@ Route.get(
   }
 );
 
-Route.post('/products', async (req: express.Request, res: express.Response) => {
+Route.post('/products',verifyToken, async (req: express.Request, res: express.Response) => {
   try {
     const prodTocreate: products = {
       name: req.body.name,
       price: req.body.price,
       category: req.body.category
     };
-
-    try {
-      jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
-    } catch (e) {
-      res.status(401);
-      res.json(`Invalid token {err}`);
-      return;
-    }
     const prodCreated: products = await prod.create(prodTocreate);
     return res.json(prodCreated);
   } catch (err) {
@@ -56,18 +59,11 @@ Route.post('/products', async (req: express.Request, res: express.Response) => {
 });
 
 Route.put(
-  '/products/:id',
+  '/products/:id', verifyToken,
   async (req: express.Request, res: express.Response) => {
     try {
       const reqBody = req.body;
       const id: number = parseInt(req.params.id.substring(1));
-      try {
-        jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
-      } catch (e) {
-        res.status(401);
-        res.json(`Invalid token {err}`);
-        return;
-      }
       const products: products = await prod.update(
         id,
         reqBody.field,
@@ -82,17 +78,10 @@ Route.put(
 );
 
 Route.delete(
-  '/products/:id',
+  '/products/:id', verifyToken,
   async (req: express.Request, res: express.Response) => {
     try {
       const id: number = parseInt(req.params.id.substring(1));
-      try {
-        jwt.verify(req.headers.authorization as unknown as string, process.env.JWT_TOCKEN_SECRET as Secret);
-      } catch (e) {
-        res.status(401);
-        res.json(`Invalid token {err}`);
-        return;
-      }
       const products: products = await prod.delete(id);
       return res.json(products);
     } catch (err) {
@@ -103,7 +92,7 @@ Route.delete(
 );
 
 Route.get(
-  '/productsCategory',
+  '/productsCategory', 
   async (req: express.Request, res: express.Response) => {
     try {
       const products: products[] = await prod.ProductsByCategory(

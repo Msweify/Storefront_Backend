@@ -19,7 +19,7 @@ describe('Tests for the User Handler', () => {
 
   it('Server should return OK code for /user/getToken', async () => {
     const data = { firstName: 'U2', lastName: 'UL2', password: 'dummy' };
-    const response = await request.get('/user/getToken').send(data);
+    const response = await request.post('/user/getToken').send(data);
     expect(response.status).toEqual(200);
   });
 
