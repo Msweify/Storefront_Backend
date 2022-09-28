@@ -24,8 +24,7 @@ describe('Tests for the User Handler', () => {
   });
 
   it('Server should return OK code for get /user', async () => {
-    const data = { token: token };
-    const response = await request.get('/user').send(data);
+    const response = await request.get('/user').set('authorization',token);
     expect(response.status).toEqual(200);
   });
 });

@@ -12,8 +12,8 @@ describe('Tests for the product Handler post functions', () => {
   });
 
   it('Server should return OK code for post /products', async () => {
-    const data = { name: 'lion', price: 50, category: 'toys', token: token };
-    const response = await request.post('/products').send(data);
+    const data = { name: 'lion', price: 50, category: 'toys'};
+    const response = await request.post('/products').send(data).set('authorization',token);
     expect(response.status).toEqual(200);
   });
 });
@@ -23,8 +23,8 @@ describe('Tests for the product Handler get functions', () => {
     const data1 = { firstName: 'U4', lastName: 'UL4', password: 'dummy' };
     const res = await request.post('/user').send(data1);
     token = res.body;
-    const data2 = { name: 'lion', price: 50, category: 'toys', token: token };
-    await request.post('/products').send(data2);
+    const data2 = { name: 'lion', price: 50, category: 'toys'};
+    await request.post('/products').send(data2).set('authorization',token);
   });
 
   it('Server should return OK code for get /products', async () => {
