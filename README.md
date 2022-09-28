@@ -9,3 +9,33 @@ The package.json contains all the required dependecies and scripts to run this p
     
     
 The endpoints as well as table schemas can be found in the requirnement document
+
+
+Setup and connect to database:
+ - Open postgres
+ - Sever: localhost
+ - Port number: 5432
+ - CREATE USER melswef WITH PASSWORD 'password';
+ - CREATE DATABASE db2;
+ - CREATE DATABASE db2_test;
+ - \c db_2
+ - GRANT ALL PRIVILEGES ON DATABASE db2 TO melswef
+ - GRANT ALL PRIVILEGES ON DATABASE db2_test TO melswef
+
+
+Backend Sever:
+- Sever: localhost
+- Port number: 3000
+
+
+
+Environomental vairables used:
+TEST_VAR=testing123
+PSG_DB=db2
+PSG_DB_TEST=db2_test
+PSG_USER=melswef
+PSG_PSS=password
+ENV=
+PSSWD_PEPER=TheseArePssInitials
+SALT_ROUNDS=10
+JWT_TOCKEN_SECRET=TOCKEN_SECRET
